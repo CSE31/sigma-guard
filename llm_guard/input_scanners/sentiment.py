@@ -41,7 +41,7 @@ class Sentiment(Scanner):
                 threshold=self._threshold,
             )
 
-            return prompt, True, 0.0
+            return prompt, True, 0.0, sentiment_score
 
         LOGGER.warning(
             "Sentiment score is above the threshold",
@@ -51,4 +51,4 @@ class Sentiment(Scanner):
 
         # Normalize such that -1 maps to 1 and threshold maps to 0
         score = round((sentiment_score_compound - (-1)) / (self._threshold - (-1)), 2)
-        return prompt, False, score, results_all
+        return prompt, False, score, sentiment_score

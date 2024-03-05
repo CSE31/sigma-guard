@@ -90,7 +90,7 @@ class PromptInjection(Scanner):
 
     def scan(self, prompt: str) -> (str, bool, float):
         if prompt.strip() == "":
-            return prompt, True, 0.0
+            return prompt, True, 0.0, {}
 
         highest_score = 0.0
         results_all = self._pipeline(self._match_type.get_inputs(prompt))
