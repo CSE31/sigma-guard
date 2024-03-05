@@ -99,7 +99,7 @@ class Toxicity(Scanner):
 
     def scan(self, prompt: str) -> (str, bool, float):
         if prompt.strip() == "":
-            return prompt, True, 0.0
+            return prompt, True, 0.0, {}
 
         inputs = self._match_type.get_inputs(prompt)
 
@@ -120,8 +120,8 @@ class Toxicity(Scanner):
         if len(toxicity_above_threshold) > 0:
             LOGGER.warning("Detected toxicity in the text", results=toxicity_above_threshold)
 
-            return prompt, False, calculate_risk_score(highest_toxicity_score, self._threshold)
+            return prompt, False, calculate_risk_score(highest_toxicity_score, self._threshold), results_all
 
         LOGGER.debug("Not toxicity found in the text", results=results_all)
 
-        return prompt, True, 0.0
+        return prompt, True, 0.0, results_all

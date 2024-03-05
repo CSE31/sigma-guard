@@ -106,8 +106,8 @@ class PromptInjection(Scanner):
             if injection_score > self._threshold:
                 LOGGER.warning("Detected prompt injection", injection_score=injection_score)
 
-                return prompt, False, calculate_risk_score(injection_score, self._threshold)
+                return prompt, False, calculate_risk_score(injection_score, self._threshold), results_all
 
         LOGGER.debug("No prompt injection detected", highest_score=highest_score)
 
-        return prompt, True, 0.0
+        return prompt, True, 0.0, results_all

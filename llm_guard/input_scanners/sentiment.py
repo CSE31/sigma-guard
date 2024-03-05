@@ -51,4 +51,4 @@ class Sentiment(Scanner):
 
         # Normalize such that -1 maps to 1 and threshold maps to 0
         score = round((sentiment_score_compound - (-1)) / (self._threshold - (-1)), 2)
-        return prompt, False, score
+        return prompt, False, score, results_all

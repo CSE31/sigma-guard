@@ -93,10 +93,10 @@ class Gibberish(Scanner):
             if score > self._threshold:
                 LOGGER.warning("Detected gibberish text", score=score, threshold=self._threshold)
 
-                return prompt, False, calculate_risk_score(score, self._threshold)
+                return prompt, False, calculate_risk_score(score, self._threshold), results_all
 
         LOGGER.debug(
             "No gibberish in the text", highest_score=highest_score, threshold=self._threshold
         )
 
-        return prompt, True, 0.0
+        return prompt, True, 0.0, results_all
