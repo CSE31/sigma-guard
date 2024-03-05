@@ -50,7 +50,7 @@ class FactualConsistency(Scanner):
 
     def scan(self, prompt: str, output: str) -> (str, bool, float):
         if prompt.strip() == "":
-            return output, True, 0.0
+            return output, True, 0.0, {}
 
         tokenized_input_seq_pair = self._tokenizer(
             output, prompt, padding=True, truncation=True, return_tensors="pt"
@@ -69,8 +69,8 @@ class FactualConsistency(Scanner):
         if entailment_score < self._minimum_score:
             LOGGER.warning("Entailment score is below the threshold", prediction=prediction)
 
-            return output, False, prediction["not_entailment"]
+            return output, False, prediction["not_entailment"], model_prediction
 
         LOGGER.debug("The output is factually consistent", prediction=prediction)
 
-        return output, True, 0.0
+        return output, True, 0.0, model_prediction

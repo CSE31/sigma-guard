@@ -119,7 +119,7 @@ class Relevance(Scanner):
 
     def scan(self, prompt: str, output: str) -> (str, bool, float):
         if output.strip() == "":
-            return output, True, 0.0
+            return output, True, 0.0, {}
 
         prompt_embedding = self._encode(prompt)
         output_embedding = self._encode(output)
@@ -128,8 +128,8 @@ class Relevance(Scanner):
         if similarity < self._threshold:
             LOGGER.warning("Result is not similar to the prompt", similarity_score=similarity)
 
-            return output, False, round(1 - similarity, 2)
+            return output, False, round(1 - similarity, 2), {"prompt_embedding":prompt_embedding,"output_embedding":output_embedding}
 
         LOGGER.debug("Result is similar to the prompt", similarity_score=similarity)
 
-        return output, True, 0.0
+        return output, True, 0.0, {"prompt_embedding":prompt_embedding,"output_embedding":output_embedding}

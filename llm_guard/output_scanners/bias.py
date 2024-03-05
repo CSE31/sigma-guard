@@ -84,7 +84,7 @@ class Bias(Scanner):
 
     def scan(self, prompt: str, output: str) -> (str, bool, float):
         if output.strip() == "":
-            return output, True, 0.0
+            return output, True, 0.0, {}
 
         highest_score = 0.0
         results_all = self._classifier(self._match_type.get_inputs(output))
@@ -102,8 +102,8 @@ class Bias(Scanner):
                     "Detected biased text", highest_score=score, threshold=self._threshold
                 )
 
-                return output, False, calculate_risk_score(score, self._threshold)
+                return output, False, calculate_risk_score(score, self._threshold), results_all
 
         LOGGER.debug("Not biased result", highest_score=highest_score, threshold=self._threshold)
 
-        return output, True, 0.0
+        return output, True, 0.0, results_all
