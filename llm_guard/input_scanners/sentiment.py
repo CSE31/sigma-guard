@@ -1,7 +1,7 @@
 from llm_guard.util import get_logger, lazy_load_dep
 
 from .base import Scanner
-
+import os
 LOGGER = get_logger()
 _lexicon = "vader_lexicon"
 
@@ -25,7 +25,12 @@ class Sentiment(Scanner):
         """
 
         nltk = lazy_load_dep("nltk")
-        nltk.download(lexicon)
+        parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+
+        # Append the path to the parent directory where your model is located
+        model_path = os.path.join(parent_dir, "models")
+        nltk.data.path.append(model_path)
+        # nltk.data.path.append("../models/sentiment")
 
         sentiment = lazy_load_dep("nltk.sentiment", "nltk")
         self._sentiment_analyzer = sentiment.SentimentIntensityAnalyzer()
